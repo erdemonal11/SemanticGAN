@@ -49,7 +49,7 @@ def train():
     if CHECKPOINT_PATH.exists():
         print(f"[INFO] Loading previous brain from: {CHECKPOINT_PATH}")
         try:
-            checkpoint = torch.load(CHECKPOINT_PATH, map_location=device)
+            checkpoint = torch.load(CHECKPOINT_PATH, map_location=device, weights_only=False)
             G.load_state_dict(checkpoint['G_state'])
             D.load_state_dict(checkpoint['D_state'])
             print("[SUCCESS] Checkpoint loaded. Resuming training.")
@@ -155,12 +155,19 @@ def train():
                 
                 current_emb = fake_emb[k].unsqueeze(0)
                 dist = torch.norm(candidate_embeddings - current_emb, dim=1)
-                best_local_idx = torch.argmin(dist).item()
+                
+
+                K = min(10, len(dist))
+                top_dists, top_indices = torch.topk(dist, k=K, largest=False)
+                
+
+                rand_choice = torch.randint(0, K, (1,)).item()
+                
+                best_local_idx = top_indices[rand_choice].item()
                 best_global_idx = valid_indices[best_local_idx]
                 
                 t_str = dataset.entity_list[best_global_idx]
-                score = dist[best_local_idx].item()
-                
+                score = top_dists[rand_choice].item()
                 f.write(f"{r_str}\t{t_str}\t{score:.4f}\n")
 
     torch.save({

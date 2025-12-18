@@ -1,0 +1,106 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{orcidlink}
+\usepackage{microtype}
+
+\title{Wasserstein GAN for Knowledge Graph Completion \\ with Continuous Learning}
+
+\author{
+    \IEEEauthorblockN{Erdem Önal \orcidlink{0009-0006-6580-3711}}
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Knowledge Graph Completion predicts missing links in incomplete knowledge bases. Generative Adversarial Networks can create informative negative samples, but many methods struggle with mode collapse and vanishing gradients when working with discrete graph data. Many models also remain fixed and do not adapt as data changes. This work presents a Wasserstein GAN model for Knowledge Graph Completion. It uses the Wasserstein distance to make training more stable on the DBLP Computer Science Bibliography dataset and produces valid RDF triples. Incremental retraining is performed once per day via a scheduled CI workflow. Experimental results on DBLP show improved novelty and diversity compared to uniform negative sampling. This allows stable generative modeling and ongoing adaptation.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Knowledge Graph Completion, Wasserstein GAN, Continuous Learning, RDF.
+\end{IEEEkeywords}
+
+\section{Introduction}
+Knowledge Graphs such as the DBLP Computer Science Bibliography store entities and relations as RDF triples. They are often incomplete. Knowledge Graph Completion tries to infer missing facts from what is already known.
+
+Uniform negative sampling is inefficient, as noted by Cai et al. \cite{cai2018kbgan}, because random entities are easy to tell apart from true facts. Adversarial learning can produce harder negative samples, but with discrete data it can be unstable and lead to vanishing gradients \cite{dai2020wgan}.
+
+Knowledge changes over time. Static embedding models fail to accommodate temporal updates in evolving knowledge graphs \cite{daruna2021continual}.
+
+This study presents a system that:
+\begin{enumerate}
+    \item Uses a Wasserstein GAN to learn the distribution of valid triples and avoid problems of conventional GANs.
+    \item Runs a continuous learning pipeline with GitHub Actions to update the model using new DBLP data.
+    \item Evaluates generated triples using novelty and diversity metrics.
+\end{enumerate}
+
+\section{Related Work}
+
+\subsection{Adversarial Learning for Knowledge Graph Completion}
+KBGAN \cite{cai2018kbgan} improved Knowledge Graph Completion by generating plausible negative samples. This made the discriminator more effective. However, it uses policy gradients to handle discrete sampling, which can be unstable and slow.
+
+\subsection{Wasserstein GANs in Graphs}
+Dai et al. \cite{dai2020wgan} applied the Wasserstein distance to GANs for discrete data. This helped reduce vanishing gradients. The method in this paper uses this idea in a system that is updated regularly.
+
+\subsection{Continual Learning}
+Most knowledge graph embedding models assume data does not change. Daruna et al. \cite{daruna2021continual} showed the need for continual learning to handle new concepts. Here, a CI/CD pipeline retrains the model every day.
+
+\section{Methodology}
+
+\subsection{Data Processing}
+The DBLP Computer Science Bibliography is the source dataset. The XML dump is streamed. High-quality publications are kept. A schema of \textit{Publication, Author, Venue,} and \textit{Year} is extracted to build RDF triples.
+
+\subsection{WGAN Architecture}
+Following \cite{dai2020wgan}, the model has:
+\begin{itemize}
+    \item \textbf{Generator ($G$):} Takes random noise $z$ and a relation $r$ to produce a tail embedding $t'$. It minimizes the Wasserstein distance to real data.
+    \item \textbf{Discriminator ($D$):} Scores triples $(h, r, t)$ for plausibility. It outputs a scalar instead of a probability.
+\end{itemize}
+
+\subsection{Continuous Learning Pipeline}
+Implemented with GitHub Actions:
+\begin{enumerate}
+    \item A daily job starts the process.
+    \item The system loads the latest checkpoint and updates weights with new DBLP data.
+    \item Results, including generated RDF triples, are published to a web dashboard.
+\end{enumerate}
+
+\section{Experiments and Metrics}
+
+\subsection{Metrics}
+The evaluation uses:
+\begin{itemize}
+    \item \textbf{Novelty:} The share of generated triples not in the training data.
+    \item \textbf{Diversity:} The range of generated relations, showing if mode collapse is avoided.
+\end{itemize}
+
+\subsection{Results}
+Experiments with DBLP show stable Wasserstein GAN loss and correct prediction of valid author and venue pairings not in the training data.
+
+\section{Conclusion}
+This approach combines adversarial sampling, Wasserstein distance stability, and continual learning to predict future scientific collaborations.
+
+\sloppy
+\begin{thebibliography}{00}
+
+\bibitem{cai2018kbgan}
+L. Cai and W. Y. Wang, ``KBGAN: Adversarial learning for knowledge graph embeddings,'' in \textit{Proc. NAACL-HLT}, 2018, pp. 1470--1480.
+
+\bibitem{dai2020wgan}
+Y. Dai, S. Wang, X. Chen, C. Xu, and W. Guo, ``Generative adversarial networks based on Wasserstein distance for knowledge graph embeddings,'' \textit{Knowledge-Based Systems}, vol. 190, p. 105165, 2020.
+
+\bibitem{daruna2021continual}
+A. Daruna, M. Gupta, M. Sridharan, and S. Chernova, ``Continual learning of knowledge graph embeddings,'' \textit{IEEE Robotics and Automation Letters}, vol. 6, no. 2, pp. 1128--1135, 2021.
+
+\end{thebibliography}
+
+\end{document}

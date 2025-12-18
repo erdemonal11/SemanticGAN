@@ -80,11 +80,11 @@
       <div class="section">
         <h2>Training Dynamics</h2>
         <p class="note-description">
-          Convergence stability of the Wasserstein GAN over fifty training epochs.
+          Convergence stability of the Wasserstein GAN over twenty training epochs.
         </p>
         <div class="chart-container">
           <img
-            src="src/loss_curve.png"
+            src="data/processed/loss_curve.png"
             alt="Training loss curve"
             onerror="this.style.display='none'; this.parentElement.innerHTML='<p style=&quot;color:#999&quot;>Chart pending next training run.</p>'"
           >
@@ -96,7 +96,7 @@
     <script>
       async function loadDashboard() {
         try {
-          const response = await fetch('src/dashboard_data.json', { cache: "no-store" });
+          const response = await fetch('dashboard_data.json', { cache: "no-store" });
           if (!response.ok) throw new Error("Dashboard data not found");
           
           const data = await response.json();
