@@ -3,7 +3,7 @@
 [![Daily Semantic GAN Training](https://github.com/erdemonal11/schema-guided-rdf-generation/actions/workflows/daily-experiment.yml/badge.svg)](https://github.com/erdemonal11/schema-guided-rdf-generation/actions/workflows/daily-experiment.yml)
 [![pages-build-deployment](https://github.com/erdemonal11/schema-guided-rdf-generation/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/erdemonal11/schema-guided-rdf-generation/actions/workflows/pages/pages-build-deployment)
 
-A Wasserstein Generative Adversarial Network (WGAN) for Knowledge Graph Completion on the DBLP Computer Science Bibliography dataset. The system generates RDF triples representing scientific publication relationships using a continuous learning pipeline that retrains the model daily via automated CI/CD workflows.
+A Wasserstein Generative Adversarial Network (WGAN) for Knowledge Graph Completion on the DBLP Computer Science Bibliography dataset. Generates RDF triples representing scientific publication relationships using a continuous learning pipeline that retrains the model daily via automated CI/CD workflows.
 
 ## Technical Research Report
 
@@ -29,7 +29,7 @@ The continuous learning pipeline runs via GitHub Actions in `.github/workflows/d
 
 ## Repository Structure
 
-The repository contains the technical report in `paper/`, preprocessing scripts in `scripts/`, model architectures and dataset loaders in `src/`, processed data in `data/processed/`, generated triples in `data/synthetic/`, model checkpoints in `checkpoints/`, and the dashboard interface in `index.html`.
+Technical report in `paper/`, preprocessing scripts in `scripts/`, model code in `src/`, data in `data/`, checkpoints in `checkpoints/`, dashboard in `index.html`.
 
 ## Experimental Results
 
@@ -39,10 +39,8 @@ Empirical evaluation on the DBLP dataset confirms stable Wasserstein loss conver
 
 This work builds upon KBGAN (Cai & Wang, 2018) for adversarial negative sampling in Knowledge Graph Embeddings, WGAN for Graphs (Dai et al., 2020) on Wasserstein distance for discrete graph data, and Continual Learning (Daruna et al., 2021) for adaptation to evolving knowledge graphs. Full references are provided in the technical report.
 
-## Technical Requirements
-
-Python 3.10+, PyTorch ≥ 2.0.0, NumPy, Matplotlib, Pandas, and tqdm. See `requirements.txt` for complete dependencies.
-
 ## Data Availability
 
 The DBLP dataset is publicly available from [dblp.uni-trier.de/xml/](https://dblp.uni-trier.de/xml/). Documentation is available at [DBLP — Some Lessons Learned](https://dblp.org/rec/conf/vldb/Ley09.html). Place the `dblp.xml` file in `data/real/` before running preprocessing.
+
+**Note**: The continuous learning pipeline is active and updates the model daily via automated workflows.

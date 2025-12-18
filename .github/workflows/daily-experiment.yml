@@ -2,8 +2,8 @@ name: Daily Semantic GAN Training
 
 on:
   schedule:
-    - cron: "0 2 * * *"
-  workflow_dispatch:
+    - cron: "0 2 * * *"  
+  workflow_dispatch:     
 
 permissions:
   contents: write
@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          lfs: true 
 
       - name: Set up Python environment
         uses: actions/setup-python@v5
@@ -36,7 +37,7 @@ jobs:
         run: |
           python scripts/evaluate_gan.py
 
-      - name: Plot training curves
+      - name: Plot and Clean training curves
         run: |
           python scripts/plot_training.py
 
@@ -49,11 +50,13 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
 
+
           git add checkpoints/gan_latest.pth
           git add data/synthetic/*.txt
           git add data/processed/training_log.csv
-          git add src/dashboard_data.json
-          git add src/loss_curve.png
+          git add data/processed/loss_curve.png
+          git add dashboard_data.json
 
+          # Commit and push
           git commit -m "Scheduled GAN training and dashboard update" || echo "No changes to commit"
           git push
