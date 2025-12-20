@@ -1,612 +1,612 @@
 {
-  "last_updated": "2025-12-19 10:46 UTC",
+  "last_updated": "2025-12-20 08:16 UTC",
   "stats": {
-    "novelty": 99.5,
-    "train_overlap": 0.5,
+    "novelty": 99.1,
+    "train_overlap": 0.9,
     "uniqueness": 100.0,
     "relation_diversity": 100.0,
-    "avg_distance": 0.1074,
+    "avg_distance": 0.0665,
     "total_generated": 1000
   },
   "hypotheses": [
     {
-      "relation": "Venue:",
-      "entity": "OR",
-      "score": "0.1020",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "MEDES",
-      "score": "0.1084",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Multi-Weighted Tree Based Query Optimization Method for Parallel Relational Database Systems.",
-      "score": "0.0702",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Christian Mattjie de Oliveira",
-      "score": "0.0628",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "Encyclopedia of Database Systems (2nd ed.)",
-      "score": "0.1102",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Kyunghyun Lee 0004",
-      "score": "0.0749",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Enabling eParticipation of the Youth in the Public Debate on Legislation in Austria: A Critical Reflection.",
-      "score": "0.0788",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Neeraj Gupta",
-      "score": "0.0722",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Rika Aizawa",
-      "score": "0.1332",
-      "novel": true
-    },
-    {
       "relation": "Published in",
-      "entity": "1980",
-      "score": "0.1907",
+      "entity": "1997",
+      "score": "0.0533",
       "novel": true
     },
     {
       "relation": "Venue:",
-      "entity": "E-LKR",
-      "score": "0.1466",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Chia-Cheng Chao",
-      "score": "0.0744",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Semi-Supervised Learning on Data Streams via Temporal Label Propagation.",
-      "score": "0.1005",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "2006",
-      "score": "0.1792",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Networked monitoring and fault-tolerant control of nonlinear process systems.",
-      "score": "0.0735",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Generative Adversarial Networks based on Mixed-Attentions for Citation Intent Classification in Scientific Publications.",
-      "score": "0.0814",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Michalitsa Christodoulou",
-      "score": "0.0736",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "A Variant of Concurrent Constraint Programming on GPU.",
-      "score": "0.0651",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "FitCNN: A cloud-assisted lightweight convolutional neural network framework for mobile devices.",
-      "score": "0.0997",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Propagation of Public Safety Warning Messages: A Delay Tolerant Network Approach.",
-      "score": "0.0923",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Estimating vegetation fractional coverage for temperate grassland in northern China based on remotely sensed data and rainfall time series.",
-      "score": "0.0905",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "A Semi-Empirical Model to Estimate Biophysical Parameters in Southern Mexico.",
-      "score": "0.0752",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "2016",
-      "score": "0.1707",
-      "novel": false
-    },
-    {
-      "relation": "Venue:",
-      "entity": "TPCG",
-      "score": "0.1349",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Evaluation of Self-taught Learning-based Representations for Facial Emotion Recognition.",
-      "score": "0.0726",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "1974",
-      "score": "0.1740",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "2020",
-      "score": "0.2043",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Damien Octeau",
-      "score": "0.0969",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "Scalable Optimization via Probabilistic Modeling",
-      "score": "0.1096",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Measure-based modeling and FPGA implementation of RF Power Amplifier using a multi-layer perceptron neural network.",
-      "score": "0.1120",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "1988",
-      "score": "0.1801",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "1979",
-      "score": "0.1725",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "AIMLSystems",
-      "score": "0.1077",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "2006",
-      "score": "0.1424",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "Philosophy and Cognitive Science",
-      "score": "0.1272",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "2001",
-      "score": "0.1728",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "2024",
-      "score": "0.1171",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "1979",
-      "score": "0.1701",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "WG",
-      "score": "0.1023",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "Handbook of Discrete and Combinatorial Mathematics",
-      "score": "0.1121",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Experimental Open-loop and Closed-loop Identification of a Multi-mass Electromechanical Servo System.",
-      "score": "0.0787",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "Programming Environments for High-Level Scientific Problem Solving",
-      "score": "0.1525",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Modeling and Using Physical Constraints in Scene Analysis.",
-      "score": "0.0683",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "Metaheuristics for Scheduling in Industrial and Manufacturing Applications",
-      "score": "0.0971",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "2000",
-      "score": "0.1647",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "2025",
-      "score": "0.1753",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "A novel concept of plane grid resolution for high-resolution SAR imaging systems.",
-      "score": "0.0806",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Moussa Sofiane Karoui",
-      "score": "0.0736",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "CS-ARF: Compressed Adaptive Random Forests for Evolving Data Stream Classification.",
-      "score": "0.0693",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "1988",
-      "score": "0.1643",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "1991",
-      "score": "0.2190",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Edouard R. Boudinov",
-      "score": "0.0725",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "2023",
-      "score": "0.1932",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "V. Palanisamy",
-      "score": "0.0626",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "Narrow Tilting Vehicles",
-      "score": "0.1640",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "Cyber Security and Resiliency Policy Framework",
-      "score": "0.0847",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "Innovations in Neural Information Paradigms and Applications",
-      "score": "0.1118",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "Machine Learning in Document Analysis and Recognition",
-      "score": "0.1277",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "HPSC",
-      "score": "0.0889",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Language Report Croatian.",
-      "score": "0.0891",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "FastQ: QoS Control Based on the Time Sequence of First Few Packets.",
-      "score": "0.0714",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Toward Large Kernel Models.",
-      "score": "0.0658",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "AAAI Workshop: Expanding the Boundaries of Health Informatics Using AI",
-      "score": "0.1299",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "BumKyu Choi",
-      "score": "0.0583",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "1999",
-      "score": "0.1655",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "CICAI (2)",
-      "score": "0.1113",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "1998",
-      "score": "0.1330",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Olivier Jeunen",
-      "score": "0.0938",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "ICAASE",
-      "score": "0.1171",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "MIE",
-      "score": "0.0866",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "TPDL",
-      "score": "0.0834",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Laura B\u00e9gon-Lours",
-      "score": "0.0697",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "\u00bbLiveVision\u00ab - Ein Bedienkonzept f\u00fcr zuk\u00fcnftige mobile Kommunikations- services auf mobilen Endger\u00e4ten.",
-      "score": "0.1060",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "EKAW",
-      "score": "0.1056",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Algebraic analysis of nondeterministic behavior.",
-      "score": "0.0712",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Kazuyuki Tanaka",
-      "score": "0.0632",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Gil-Shin Moon",
-      "score": "0.0608",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Xiaoying Gao",
-      "score": "0.0897",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "PPAM (1)",
-      "score": "0.0961",
+      "entity": "LSAD@SIGCOMM",
+      "score": "0.0707",
       "novel": true
     },
     {
       "relation": "Published in",
       "entity": "2003",
-      "score": "0.1610",
+      "score": "0.1096",
       "novel": true
     },
     {
       "relation": "Venue:",
-      "entity": "COM.Geo",
-      "score": "0.1104",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "J. Neal Richter",
-      "score": "0.0803",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "European Conference on Computer Algebra (2)",
-      "score": "0.1030",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Franco Rojas L\u00f3pez",
-      "score": "0.0598",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "HybridAIMS+CAI (Selected Papers)",
-      "score": "0.1165",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "Imaging Sensors and Systems",
-      "score": "0.1001",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "How to Do a Million Watchpoints: Efficient Debugging Using Dynamic Instrumentation.",
-      "score": "0.0835",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Bayesian model selection for the yeast GATA-factor network: A comparison of computational approaches.",
-      "score": "0.0771",
-      "novel": true
-    },
-    {
-      "relation": "hasAuthor",
-      "entity": "Ikuo Matsuba",
-      "score": "0.0756",
-      "novel": true
-    },
-    {
-      "relation": "Published in",
-      "entity": "1988",
-      "score": "0.1550",
-      "novel": true
-    },
-    {
-      "relation": "Authored Paper",
-      "entity": "Proceedings of the 26th Annual International Conference on Machine Learning, ICML 2009, Montreal, Quebec, Canada, June 14-18, 2009",
-      "score": "0.0626",
-      "novel": true
-    },
-    {
-      "relation": "Venue:",
-      "entity": "The Geospatial Web",
-      "score": "0.1081",
+      "entity": "KBNets@SIGCOMM",
+      "score": "0.0672",
       "novel": true
     },
     {
       "relation": "Published in",
       "entity": "2005",
-      "score": "0.1867",
+      "score": "0.0687",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "Guide to Disaster-Resilient Communication Networks",
+      "score": "0.0633",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Measuring, enabling and comparing modularity, regularity and hierarchy in evolutionary design.",
+      "score": "0.0580",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Karl E. Peace",
+      "score": "0.0581",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Daniel Marczak",
+      "score": "0.0620",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Text2Relight: Creative Portrait Relighting with Text Guidance.",
+      "score": "0.0458",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2006",
+      "score": "0.1036",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Assessing Forgetfulness in Data Stream Learning - The Case of Hoeffding AnyTime Tree Algorithm.",
+      "score": "0.0590",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2022",
+      "score": "0.0755",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Brian Cronauer",
+      "score": "0.0567",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Scene Classification Using Transfer Learning.",
+      "score": "0.0482",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1973",
+      "score": "0.1183",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Where are we with Human Pose Estimation in Real-World Surveillance?",
+      "score": "0.0386",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "AAAI Workshop: Computer Poker and Imperfect Information Games",
+      "score": "0.1259",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Multi-Robot and Multi-Camera Patrolling.",
+      "score": "0.0781",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "KR4HC/ProHealth/TEAAM@AIME",
+      "score": "0.0832",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "PAISI",
+      "score": "0.0586",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Belinda Colston",
+      "score": "0.0616",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1998",
+      "score": "0.1210",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Desynchronization and Energy Efficiency of Gaussian Neurostimulation on Different Sites of the Basal Ganglia.",
+      "score": "0.0481",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "Advances in Intelligent Analysis of Medical Data and Decision Support Systems",
+      "score": "0.0591",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Robin Rombach",
+      "score": "0.0956",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2014",
+      "score": "0.0707",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "MUSIC",
+      "score": "0.0476",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "An efficient approximate algorithm for delay-cost-constrained QoS routing.",
+      "score": "0.0414",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2022",
+      "score": "0.0701",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Reliability Evaluation of CNN-enabled Systems in Adversarial Scenarios.",
+      "score": "0.0430",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1999",
+      "score": "0.0806",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Abhisri Shaha",
+      "score": "0.0554",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "JINIS",
+      "score": "0.0535",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "Complex System Modelling and Control Through Intelligent Soft Computations",
+      "score": "0.0716",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2022",
+      "score": "0.1008",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Concept Multilattices with Truth-Stressing Hedges.",
+      "score": "0.0682",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1990",
+      "score": "0.1117",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1994",
+      "score": "0.0869",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Yang Chen",
+      "score": "0.0376",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "A Measure for Accuracy Disparity Maps Evaluation.",
+      "score": "0.0545",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "MMCDSR: a Multimodal and Cross-domain Fusion Framework for Sequential Recommendation.",
+      "score": "0.0411",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Global web archive integration with memento.",
+      "score": "0.0454",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1976",
+      "score": "0.1285",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2010",
+      "score": "0.0684",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2026",
+      "score": "0.1202",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Wenhua Zhang",
+      "score": "0.0431",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "Abstraction, Reformulation, and Approximation",
+      "score": "0.0776",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1997",
+      "score": "0.0975",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2012",
+      "score": "0.0741",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Gaurav Dixit",
+      "score": "0.0413",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Sudhanshu Gupta 0003",
+      "score": "0.0437",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1964",
+      "score": "0.0899",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Automatic Text-to-Speech Alignment: Aspects of Robustification.",
+      "score": "0.0541",
       "novel": true
     },
     {
       "relation": "Published in",
       "entity": "1991",
-      "score": "0.1795",
+      "score": "0.0755",
       "novel": true
     },
     {
       "relation": "Authored Paper",
-      "entity": "Mobile Video in Everyday Social Interactions.",
-      "score": "0.1057",
+      "entity": "A new Access Control model based on the Chinese Wall Security Policy Model.",
+      "score": "0.0510",
       "novel": true
     },
     {
-      "relation": "Authored Paper",
-      "entity": "Multiangular Polarized Characteristics of Cirrus Clouds at 1380 nm.",
-      "score": "0.0761",
+      "relation": "hasAuthor",
+      "entity": "Enrique No\u00e9",
+      "score": "0.0458",
       "novel": true
     },
     {
       "relation": "Published in",
-      "entity": "1969",
-      "score": "0.1592",
+      "entity": "2021",
+      "score": "0.0577",
       "novel": true
     },
     {
       "relation": "Venue:",
-      "entity": "5G-MeMZ@SIGCOMM",
-      "score": "0.1139",
+      "entity": "Models of Strategic Reasoning",
+      "score": "0.0873",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Measuring historical word sense variation.",
+      "score": "0.0818",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "K4CARE",
+      "score": "0.0603",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "KG4IR@SIGIR",
+      "score": "0.1030",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "MDPGT: Momentum-Based Decentralized Policy Gradient Tracking.",
+      "score": "0.0401",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2004",
+      "score": "0.0718",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1993",
+      "score": "0.1142",
       "novel": true
     },
     {
       "relation": "hasAuthor",
-      "entity": "Francesca Cordero",
-      "score": "0.0747",
+      "entity": "Jochen Meyer 0001",
+      "score": "0.0477",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2019",
+      "score": "0.0709",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2008",
+      "score": "0.0513",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1981",
+      "score": "0.1041",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1994",
+      "score": "0.0790",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Automatically designing an image processing pipeline for a five-band camera prototype using the local, linear, learned (L3) method.",
+      "score": "0.0676",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Linear joint integrated probabilistic data association - LJIPDA.",
+      "score": "0.0384",
       "novel": true
     },
     {
       "relation": "hasAuthor",
-      "entity": "Samir Rebai",
-      "score": "0.0856",
+      "entity": "Geoff Harvey",
+      "score": "0.0930",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Shruti V. Bharati",
+      "score": "0.0657",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "A Fast Finite-Time Consensus based Gradient Method for Distributed Optimization over Digraphs.",
+      "score": "0.0400",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Prototype system for method materialisation and maintenance in object-oriented databases.",
+      "score": "0.0603",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "David E. Shean",
+      "score": "0.0428",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "Speech Emotion Recognition with Log-Gabor Filters.",
+      "score": "0.0426",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Jacobus Swarts",
+      "score": "0.0482",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Chin-Man Kim",
+      "score": "0.0745",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "Software Safety and Security",
+      "score": "0.0727",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "LSAD@SIGCOMM",
+      "score": "0.0741",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "Symposium on Compiler Optimization",
+      "score": "0.0597",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2003",
+      "score": "0.1209",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Vikram Krishnamurthy",
+      "score": "0.0391",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1982",
+      "score": "0.0934",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "Color Imaging: Device-Independent Color, Color Hardcopy, and Applications",
+      "score": "0.0785",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2008",
+      "score": "0.0580",
+      "novel": true
+    },
+    {
+      "relation": "Authored Paper",
+      "entity": "SPJRU-Algebra.",
+      "score": "0.0600",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Biligsaikhan Batjargal",
+      "score": "0.0508",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2009",
+      "score": "0.1142",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Jan Sadecki",
+      "score": "0.0468",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1999",
+      "score": "0.1113",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "Foundations of Computational Intelligence (1)",
+      "score": "0.0751",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1964",
+      "score": "0.0911",
+      "novel": true
+    },
+    {
+      "relation": "hasAuthor",
+      "entity": "Manuel A. Mendoza",
+      "score": "0.0605",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "Blockchain Cybersecurity, Trust and Privacy",
+      "score": "0.0485",
+      "novel": true
+    },
+    {
+      "relation": "Venue:",
+      "entity": "Eurographics (Lab Presentations)",
+      "score": "0.0644",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "1980",
+      "score": "0.0640",
+      "novel": true
+    },
+    {
+      "relation": "Published in",
+      "entity": "2012",
+      "score": "0.0804",
       "novel": true
     }
   ]
