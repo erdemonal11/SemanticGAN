@@ -12,7 +12,9 @@ def clean_and_plot():
 
     try:
         df = pd.read_csv(LOG_FILE)
+        df["Epoch"] = df["Epoch"].astype(int)
         df_clean = df.tail(20).sort_values("Epoch")
+        
         df_clean.to_csv(LOG_FILE, index=False)
 
         plt.rcParams.update({
@@ -22,7 +24,7 @@ def clean_and_plot():
             "mathtext.fontset": "cm"
         })
 
-        plt.figure(figsize=(10, 5), dpi=300)
+        plt.figure(figsize=(10, 5.5), dpi=300)
         
         plt.plot(df_clean["Epoch"], df_clean["D_Loss"], 
                  label=r"Discriminator Loss ($D$)", color="#1f77b4", linewidth=2)
@@ -33,13 +35,16 @@ def clean_and_plot():
         
         plt.xlabel("Epochs", fontsize=12)
         plt.ylabel("WGAN Loss", fontsize=12)
-        plt.title(r"$\text{GAN Training Convergence}$", fontsize=14, pad=15)
+        plt.title(r"$\text{GAN Training Convergence}$", fontsize=14, pad=10)
         
-        plt.legend(frameon=True, loc='center right', fontsize=10)
         plt.grid(True, which='both', linestyle=':', alpha=0.4)
-        plt.tight_layout()
         
-        plt.savefig(OUTPUT_IMG)
+        plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), 
+                   ncol=2, frameon=False, fontsize=11)
+        
+        plt.subplots_adjust(bottom=0.2)
+        
+        plt.savefig(OUTPUT_IMG, bbox_inches='tight')
         print(f"Cleaned plot saved to {OUTPUT_IMG}")
         
     except Exception as e:
