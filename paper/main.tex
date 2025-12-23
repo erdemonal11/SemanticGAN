@@ -23,7 +23,7 @@
 \maketitle
 
 \begin{abstract}
-Knowledge Graph Completion addresses the problem of missing relations in structured knowledge bases. Adversarial models can generate informative negative samples, but many approaches suffer from unstable optimization when applied to discrete graph data. Most existing models also assume static datasets and do not adapt as new information becomes available. This work presents a Wasserstein based adversarial model for Knowledge Graph Completion. The method is evaluated on the DBLP Computer Science Bibliography and generates valid RDF triples. The use of the Wasserstein distance leads to stable training behavior. The model is updated daily through an automated pipeline. Experiments conducted on a subset of approximately five hundred thousand publications show that the generated triples are largely novel and free of duplication.
+Knowledge Graph Completion addresses the problem of missing relations in structured knowledge bases. Adversarial models can generate informative negative samples, but many approaches suffer from unstable optimization when applied to discrete graph data. Most existing models also assume static datasets and do not adapt as new information becomes available. This work presents a Wasserstein based adversarial model for Knowledge Graph Completion. The method is evaluated on the DBLP Computer Science Bibliography and generates valid RDF triples. The use of the Wasserstein distance leads to stable training behavior. The model is updated daily through an automated pipeline. Experiments conducted on a dataset containing over 3.9 million entities show that the generated triples are largely novel and free of duplication.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -49,7 +49,7 @@ Continual learning for knowledge graphs has received comparatively less attentio
 \section{Methodology}
 
 \subsection{Data Processing}
-The DBLP Computer Science Bibliography serves as the data source. The raw XML dump contains several million records and cannot be loaded into memory directly. A streaming parser is therefore used to process the data sequentially. After filtering incomplete and low quality entries, a subset of four hundred ninety six thousand publications is retained. These records are transformed into RDF triples representing authorship, publication venues, and temporal information.
+The DBLP Computer Science Bibliography serves as the data source. The raw XML dump contains several million records and cannot be loaded into memory directly. A streaming parser is therefore used to process the data sequentially. After filtering incomplete and low quality entries, over 3.9 million publications are retained. These records are transformed into RDF triples representing authorship, publication venues, and temporal information.
 
 \subsection{WGAN Architecture}
 The model follows the Wasserstein GAN formulation applied to knowledge graph triples. The generator receives random noise together with a relation embedding and produces a candidate tail representation. The discriminator assigns a scalar score to each triple and estimates its consistency with the data distribution. Training minimizes the Wasserstein distance between real and generated samples under a Lipschitz constraint on the discriminator.
@@ -61,7 +61,7 @@ The model follows the Wasserstein GAN formulation applied to knowledge graph tri
 Here $\mathcal{P}$ denotes the set of one Lipschitz functions and $\mathbb{P}_g$ is the distribution induced by the generator.
 
 \subsection{Continuous Learning Pipeline}
-Model updates are performed once per day using an automated workflow built on GitHub Actions. Each update resumes training from the most recent checkpoint and incorporates new DBLP records when available. Model parameters and embedding matrices are tracked using Git Large File Storage. This incremental strategy limits the computational overhead associated with repeated full retraining as the knowledge graph expands.
+Model updates are performed once per day using an automated workflow built on GitHub Actions. Each update resumes training from the most recent checkpoint and incorporates new DBLP records when available. Model parameters and embedding matrices are versioned using Git Large File Storage. This incremental strategy limits the computational overhead associated with repeated full retraining as the knowledge graph expands.
 
 \section{Experiments and Results}
 
@@ -79,11 +79,11 @@ Training exhibits stable convergence behavior across runs as illustrated in Figu
 \toprule
 Metric & Value \\
 \midrule
-Novelty & 99.1\% \\
+Novelty & 100.0\% \\
 Uniqueness & 100.0\% \\
-Training Overlap & 0.9\% \\
+Training Overlap & 0.0\% \\
 Relation Coverage & 100.0\% \\
-Average Distance & 0.0665 \\
+Average Distance & 0.5133 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -91,15 +91,15 @@ Average Distance & 0.0665 \\
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[width=0.48\textwidth]{loss_curve.png}}
-\caption{Training loss convergence on the DBLP dataset}
+\caption{Training loss convergence during WGAN optimization on the DBLP dataset}
 \label{fig:loss}
 \end{figure}
 
 \section{Discussion}
-The observed average distance of 0.0665 provides insight into the structure of the learned embedding space. In the Wasserstein setting, a low distance indicates that generated triples lie close to the distribution of observed facts. This suggests that the generator produces candidates that remain consistent with the relational patterns of the graph. At the same time, the high novelty score shows that these candidates are not replicas of training data. Together, these results indicate that the model explores regions of the latent space that correspond to plausible but previously unobserved relations. This behavior supports the use of the model for identifying likely missing links rather than reproducing known ones.
+The observed average distance of 0.5133 provides insight into the structure of the learned embedding space. In the Wasserstein setting, a low distance indicates that generated triples lie close to the distribution of observed facts. This suggests that the generator produces candidates that remain consistent with the relational patterns of the graph. At the same time, the high novelty score shows that these candidates are not replicas of training data. Together, these results indicate that the model explores regions of the latent space that correspond to plausible but previously unobserved relations. This behavior supports the use of the model for identifying likely missing links rather than reproducing known ones.
 
 \section{Conclusion}
-This work presents a Wasserstein based adversarial approach to Knowledge Graph Completion with periodic model updates. The use of the Wasserstein distance leads to stable optimization on discrete graph data. Experiments on the DBLP dataset show that the model generates novel and non duplicated triples. The results indicate that incremental retraining is a viable strategy for maintaining knowledge graph models as new data becomes available.
+This work presents a Wasserstein based adversarial approach to Knowledge Graph Completion with periodic model updates. The use of the Wasserstein distance leads to stable optimization on discrete graph data. Experiments on the DBLP dataset show that the model generates novel and unique triples. The results indicate that incremental retraining is a viable strategy for maintaining knowledge graph models as new data becomes available.
 
 \sloppy
 \begin{thebibliography}{00}
