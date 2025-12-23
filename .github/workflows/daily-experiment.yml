@@ -54,7 +54,6 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
 
-          # Dosyaları ekle
           git add checkpoints/gan_latest.pth
           git add data/synthetic/*.txt
           git add data/processed/training_log.csv

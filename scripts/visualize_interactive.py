@@ -25,7 +25,7 @@ def create_interactive_map():
         id_to_str = json.load(f)
     
     print("Loading model checkpoint...")
-    checkpoint = torch.load(CHECKPOINT_PATH, map_location="cpu")
+    checkpoint = torch.load(CHECKPOINT_PATH, map_location="cpu", weights_only=False)
     embeddings = checkpoint["D_state"]["ent_embedding.weight"].numpy()
 
     indices = []
