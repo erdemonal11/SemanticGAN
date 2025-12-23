@@ -3,7 +3,7 @@ name: Daily Semantic GAN Training
 on:
   schedule:
     - cron: "0 2 * * *"  
-  workflow_dispatch:     
+  workflow_dispatch:    
 
 permissions:
   contents: write
@@ -41,6 +41,10 @@ jobs:
         run: |
           python scripts/plot_training.py
 
+      - name: Generate Interactive Map
+        run: |
+          python scripts/visualize_interactive.py
+
       - name: Update dashboard data
         run: |
           python scripts/update_dashboard.py
@@ -50,13 +54,15 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
 
-
+          # Dosyaları ekle
           git add checkpoints/gan_latest.pth
           git add data/synthetic/*.txt
           git add data/processed/training_log.csv
           git add data/processed/loss_curve.png
+          git add semantic_map.html
           git add dashboard_data.json
 
-          # Commit and push
           git commit -m "Scheduled GAN training and dashboard update" || echo "No changes to commit"
+          
+          git pull --rebase origin main
           git push

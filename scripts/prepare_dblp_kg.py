@@ -10,7 +10,7 @@ OUTPUT_DIR = Path("data/processed")
 TRIPLES_FILE = OUTPUT_DIR / "kg_triples_ids.txt"
 MAPPINGS_FILE = OUTPUT_DIR / "kg_mappings.json"
 
-MAX_PUBLICATIONS = 500_000
+MAX_PUBLICATIONS = 1_000_000  
 
 PUBLICATION_TAGS = {
     "article", "inproceedings", "incollection", "proceedings",
@@ -32,7 +32,10 @@ def main():
     str_to_id: Dict[str, str] = {}
     id_to_str: Dict[str, str] = {}
     
-    counts = {"author": 0, "pub": 0, "venue": 0, "year": 0}
+    counts = {
+        "author": 0, "pub": 0, "venue": 0, "year": 0, 
+        "link": 0, "doi": 0, "type": 0, "collection": 0
+    }
 
     def get_id(text: str, type_prefix: str) -> str:
         key = f"{type_prefix}:{text}"
@@ -47,7 +50,7 @@ def main():
     pub_count = 0
     total_scanned = 0
 
-    print(f"[INFO] Parsing {DBLP_XML_PATH}...")
+    print(f"[INFO] Initializing Parser for {MAX_PUBLICATIONS} entries...")
     
     parser = ET.XMLParser()
     for name, value in html.entities.entitydefs.items():
@@ -57,13 +60,12 @@ def main():
     _, root = next(context)
 
     with open(TRIPLES_FILE, "w", encoding="utf-8") as f_out:
-        
         for event, elem in context:
             if event != "end": continue
             
             total_scanned += 1
             if total_scanned % 50000 == 0:
-                sys.stdout.write(f"\r[STATUS] Scanned: {total_scanned:,} | Publications: {pub_count:,}")
+                sys.stdout.write(f"\r[SCAN] Scanned: {total_scanned:,} | Extracted: {pub_count:,}")
                 sys.stdout.flush()
 
             tag = _local(elem.tag)
@@ -71,9 +73,13 @@ def main():
                 continue
 
             try:
+                # 1. Extract Raw Text
                 title_text = _text(elem.find("title"))
                 year_text = _text(elem.find("year"))
                 venue_text = _text(elem.find("journal")) or _text(elem.find("booktitle"))
+                ee_text = _text(elem.find("ee"))
+                pages_text = _text(elem.find("pages"))
+                crossref_text = _text(elem.find("crossref"))
 
                 if not title_text or not year_text:
                     elem.clear(); root.clear(); continue
@@ -81,18 +87,15 @@ def main():
                 pub_id = get_id(title_text, "pub")
                 year_id = get_id(year_text, "year")
                 venue_id = get_id(venue_text, "venue") if venue_text else None
+                
+                batch = []
 
                 author_elems = elem.findall("author") or elem.findall("editor")
-                author_ids = []
-                for a in author_elems:
-                    aname = _text(a)
-                    if aname:
-                        author_ids.append(get_id(aname, "author"))
+                author_ids = [get_id(_text(a), "author") for a in author_elems if _text(a)]
                 
                 if not author_ids:
                     author_ids.append(get_id("Unknown Author", "author"))
 
-                batch = []
                 for aid in author_ids:
                     batch.append(f"{aid}\tdblp:wrote\t{pub_id}\n")
                     batch.append(f"{pub_id}\tdblp:hasAuthor\t{aid}\n")
@@ -100,6 +103,27 @@ def main():
                 if venue_id:
                     batch.append(f"{pub_id}\tdblp:publishedIn\t{venue_id}\n")
                 batch.append(f"{pub_id}\tdblp:inYear\t{year_id}\n")
+
+                if ee_text:
+                    link_id = get_id(ee_text, "link")
+                    batch.append(f"{pub_id}\tdblp:hasLink\t{link_id}\n")
+                    if "doi.org/" in ee_text:
+                        doi_val = ee_text.split("doi.org/")[-1]
+                        doi_id = get_id(doi_val, "doi")
+                        batch.append(f"{pub_id}\tdblp:hasDOI\t{doi_id}\n")
+
+                if pages_text:
+                    p_type = "short_paper"
+                    if "-" in pages_text:
+                        try:
+                            parts = pages_text.split("-")
+                            if len(parts) == 2 and int(parts[1]) - int(parts[0]) > 7:
+                                p_type = "long_paper"
+                        except: pass
+                    batch.append(f"{pub_id}\tdblp:paperType\t{get_id(p_type, 'type')}\n")
+
+                if crossref_text:
+                    batch.append(f"{pub_id}\tdblp:partOf\t{get_id(crossref_text, 'collection')}\n")
                 
                 f_out.writelines(batch)
                 
@@ -112,13 +136,13 @@ def main():
             except Exception:
                 elem.clear(); root.clear(); continue
 
-    print(f"\n[INFO] Saving Mappings to {MAPPINGS_FILE}...")
+    print(f"\n[DONE] Parser finished successfully.")
+    print(f"Saving mappings to {MAPPINGS_FILE}...")
     with open(MAPPINGS_FILE, "w", encoding="utf-8") as f_map:
         json.dump(id_to_str, f_map, indent=2)
 
-    print(f"[SUCCESS] Done.")
-    print(f" - Triples (GAN Input): {TRIPLES_FILE}")
-    print(f" - Decoder Map (Website): {MAPPINGS_FILE}")
+    print(f"Total Entities Mapped: {sum(counts.values()):,}")
+    print(f"Total Triples Extracted: {pub_count:,}")
 
 if __name__ == "__main__":
     main()
