@@ -10,7 +10,7 @@ OUTPUT_DIR = Path("data/processed")
 TRIPLES_FILE = OUTPUT_DIR / "kg_triples_ids.txt"
 MAPPINGS_FILE = OUTPUT_DIR / "kg_mappings.json"
 
-MAX_PUBLICATIONS = 1_000_000  
+MAX_PUBLICATIONS = 1_200_000  
 
 PUBLICATION_TAGS = {
     "article", "inproceedings", "incollection", "proceedings",
@@ -50,7 +50,7 @@ def main():
     pub_count = 0
     total_scanned = 0
 
-    print(f"[INFO] Initializing Parser for {MAX_PUBLICATIONS} entries...")
+    print(f"[INFO] Initializing Parser for {MAX_PUBLICATIONS} entries (Year >= 2015)...")
     
     parser = ET.XMLParser()
     for name, value in html.entities.entitydefs.items():
@@ -73,15 +73,24 @@ def main():
                 continue
 
             try:
-                # 1. Extract Raw Text
                 title_text = _text(elem.find("title"))
                 year_text = _text(elem.find("year"))
+                
+                if not year_text:
+                     elem.clear(); root.clear(); continue
+                
+                try:
+                    if int(year_text) < 2015:
+                        elem.clear(); root.clear(); continue
+                except ValueError:
+                    elem.clear(); root.clear(); continue
+
                 venue_text = _text(elem.find("journal")) or _text(elem.find("booktitle"))
                 ee_text = _text(elem.find("ee"))
                 pages_text = _text(elem.find("pages"))
                 crossref_text = _text(elem.find("crossref"))
 
-                if not title_text or not year_text:
+                if not title_text:
                     elem.clear(); root.clear(); continue
 
                 pub_id = get_id(title_text, "pub")
