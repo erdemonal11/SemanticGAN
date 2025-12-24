@@ -1,16 +1,16 @@
 {
-  "last_updated": "2025-12-23 19:44 UTC",
+  "last_updated": "2025-12-24 13:17 UTC",
   "training_status": {
-    "epoch": 1,
-    "d_loss": -0.0085,
-    "g_loss": 0.019
+    "epoch": 2,
+    "d_loss": -0.0067,
+    "g_loss": 0.0163
   },
   "stats": {
     "novelty": 100.0,
     "train_overlap": 0.0,
     "uniqueness": 100.0,
     "relation_diversity": 100.0,
-    "avg_distance": 0.5133,
+    "avg_distance": 0.3496,
     "schema_validity": 0.0,
     "total_generated": 1000,
     "total_knowledge_base": 3910565
@@ -18,394 +18,394 @@
   "relation_freq": [
     {
       "relation": "dblp:hasAuthor",
-      "count": 116,
-      "percent": 11.6
+      "count": 138,
+      "percent": 13.8
     },
     {
       "relation": "dblp:hasDOI",
-      "count": 124,
-      "percent": 12.4
+      "count": 111,
+      "percent": 11.1
     },
     {
       "relation": "dblp:hasLink",
-      "count": 115,
-      "percent": 11.5
+      "count": 140,
+      "percent": 14.0
     },
     {
       "relation": "dblp:inYear",
-      "count": 129,
-      "percent": 12.9
+      "count": 144,
+      "percent": 14.4
     },
     {
       "relation": "dblp:paperType",
-      "count": 131,
-      "percent": 13.1
+      "count": 114,
+      "percent": 11.4
     },
     {
       "relation": "dblp:partOf",
-      "count": 109,
-      "percent": 10.9
+      "count": 117,
+      "percent": 11.7
     },
     {
       "relation": "dblp:publishedIn",
-      "count": 137,
-      "percent": 13.7
+      "count": 117,
+      "percent": 11.7
     },
     {
       "relation": "dblp:wrote",
-      "count": 139,
-      "percent": 13.9
+      "count": 119,
+      "percent": 11.9
     }
   ],
   "hypotheses": [
     {
       "head": "generated_context",
-      "relation": "inYear",
-      "tail": "Sana Imtiaz",
-      "score": "0.3930",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "inYear",
-      "tail": "10.1109/IGARSS39084.2020.9324626",
-      "score": "0.3552",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "paperType",
-      "tail": "Mitigating the Effects of Reading Interruptions by Providing Reviews and Previews.",
-      "score": "0.4931",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "wrote",
-      "tail": "https://doi.org/10.1145/1629911.1630078",
-      "score": "0.3360",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "inYear",
-      "tail": "https://doi.org/10.1109/IJCNN.2014.6889447",
-      "score": "0.3927",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "paperType",
-      "tail": "Humanoid behaviour learning through visuomotor association by self-imitation.",
-      "score": "0.4722",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "publishedIn",
-      "tail": "10.1007/3-540-44828-4_25",
-      "score": "0.9222",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "hasDOI",
-      "tail": "https://doi.org/10.1109/IGARSS.2012.6350511",
-      "score": "0.6729",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "hasLink",
-      "tail": "https://doi.org/10.1609/aaai.v35i7.16806",
-      "score": "0.4732",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "hasDOI",
-      "tail": "https://doi.org/10.1109/FIE.2018.8659187",
-      "score": "0.6628",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "hasLink",
-      "tail": "https://doi.org/10.1007/978-0-387-35973-1_932",
-      "score": "0.5383",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "publishedIn",
-      "tail": "https://doi.org/10.1016/b978-1-55860-247-2.50012-7",
-      "score": "0.7661",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
       "relation": "partOf",
-      "tail": "Athanasios Alexopoulos",
-      "score": "0.6491",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "hasLink",
-      "tail": "10.1109/ISQED51717.2021.9424262",
-      "score": "0.4554",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "paperType",
-      "tail": "Sumit Saurabh",
-      "score": "0.3994",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "inYear",
-      "tail": "Yumo Zhang 0002",
-      "score": "0.5283",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "partOf",
-      "tail": "https://doi.org/10.1109/BIBE.2007.4375657",
-      "score": "0.6663",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "publishedIn",
-      "tail": "Bimal Shah",
-      "score": "0.8418",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "inYear",
-      "tail": "https://doi.org/10.1007/978-3-540-69429-8_13",
-      "score": "0.3862",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "inYear",
-      "tail": "https://repository.isls.org/handle/1/3716",
-      "score": "0.3876",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "inYear",
-      "tail": "10.1109/DEXA.1998.707485",
-      "score": "0.3726",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "wrote",
-      "tail": "https://doi.org/10.1145/3449726.3459445",
-      "score": "0.3167",
+      "tail": "Haruo Yokota",
+      "score": "0.5476",
       "is_novel": true
     },
     {
       "head": "generated_context",
       "relation": "hasDOI",
-      "tail": "https://doi.org/10.1145/3339252.3340521",
-      "score": "0.7472",
+      "tail": "Ramzi El-Haddadeh",
+      "score": "0.4771",
       "is_novel": true
     },
     {
       "head": "generated_context",
       "relation": "publishedIn",
-      "tail": "Eric Muth",
-      "score": "0.9315",
+      "tail": "10.1145/2851613.2851992",
+      "score": "0.5442",
       "is_novel": true
     },
     {
       "head": "generated_context",
-      "relation": "paperType",
-      "tail": "Time synchronization in Wireless Sensor Networks.",
-      "score": "0.4013",
+      "relation": "wrote",
+      "tail": "Jackson Souza",
+      "score": "0.2327",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "wrote",
+      "tail": "Fran\u00e7ois Ferland",
+      "score": "0.2761",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "inYear",
+      "tail": "https://doi.org/10.1109/IGARSS.2003.1293984",
+      "score": "0.3006",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "wrote",
+      "tail": "10.1109/IGARSS46834.2022.9884856",
+      "score": "0.2484",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "inYear",
+      "tail": "Huibin Gong",
+      "score": "0.2634",
       "is_novel": true
     },
     {
       "head": "generated_context",
       "relation": "hasDOI",
-      "tail": "https://doi.org/10.1137/1.9781611974348.95",
-      "score": "0.5664",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "wrote",
-      "tail": "The gray lady gets a new dress: a field study of the times news reader.",
-      "score": "0.2623",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "wrote",
-      "tail": "Sheldon Simon",
-      "score": "0.3485",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "wrote",
-      "tail": "Santiago Arango Munoz",
-      "score": "0.3260",
+      "tail": "Fractional Types - Expressive and Safe Space Management for Ancilla Bits.",
+      "score": "0.4292",
       "is_novel": true
     },
     {
       "head": "generated_context",
       "relation": "hasLink",
-      "tail": "https://doi.org/10.1109/WCNC.2019.8886080",
-      "score": "0.4563",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "wrote",
-      "tail": "10.1007/978-3-031-90252-9_12",
-      "score": "0.3605",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "paperType",
-      "tail": "Philip Koene",
-      "score": "0.4419",
+      "tail": "Bao Zhu",
+      "score": "0.2925",
       "is_novel": true
     },
     {
       "head": "generated_context",
       "relation": "hasAuthor",
-      "tail": "Wireless VPN Backbone Performance for Database Transactions.",
-      "score": "0.3140",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "hasDOI",
-      "tail": "Self Recalibration of a Structured Light Vision System from a Single View.",
-      "score": "0.6705",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "partOf",
-      "tail": "Zi Qing Lin",
-      "score": "0.5678",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "hasAuthor",
-      "tail": "Shaohua Kong",
-      "score": "0.4204",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "inYear",
-      "tail": "Aaron Holroyd",
-      "score": "0.3989",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "hasAuthor",
-      "tail": "10.1109/BigDataService58306.2023.00019",
-      "score": "0.3809",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "hasAuthor",
-      "tail": "Angela Erb",
-      "score": "0.3719",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "publishedIn",
-      "tail": "Ricarte de Sousa Ribeiro",
-      "score": "0.9433",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "publishedIn",
-      "tail": "Huda Salman",
-      "score": "0.7568",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "hasDOI",
-      "tail": "10.1007/978-3-642-40313-2_41",
-      "score": "0.4688",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "inYear",
-      "tail": "Computing Minimal Persistent Cycles: Polynomial and Hard Cases.",
-      "score": "0.4112",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "partOf",
-      "tail": "Ultan Neville",
-      "score": "0.5465",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "partOf",
-      "tail": "10.1609/aaai.v39i10.33170",
-      "score": "0.5491",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "wrote",
-      "tail": "10.1109/DCOSS.2014.24",
-      "score": "0.3774",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "hasDOI",
-      "tail": "https://ceur-ws.org/Vol-2448/SSS19_Paper_Upload_221.pdf",
-      "score": "0.5704",
+      "tail": "conf/vahc/2021",
+      "score": "0.2688",
       "is_novel": true
     },
     {
       "head": "generated_context",
       "relation": "hasLink",
-      "tail": "https://doi.org/10.1109/IGARSS53475.2024.10640700",
-      "score": "0.4753",
-      "is_novel": true
-    },
-    {
-      "head": "generated_context",
-      "relation": "paperType",
-      "tail": "Dong-wook Rha",
-      "score": "0.4727",
+      "tail": "Andrew Judson",
+      "score": "0.2376",
       "is_novel": true
     },
     {
       "head": "generated_context",
       "relation": "wrote",
-      "tail": "10.1109/IJCNN.2006.247003",
-      "score": "0.3204",
+      "tail": "https://escholarship.org/uc/item/2rq7b322",
+      "score": "0.2828",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasDOI",
+      "tail": "Avi Schwarzschild",
+      "score": "0.4544",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "paperType",
+      "tail": "https://doi.org/10.4230/LIPIcs.SNAPL.2015.79",
+      "score": "0.2916",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "inYear",
+      "tail": "B. Bhilkkaji",
+      "score": "0.2822",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasAuthor",
+      "tail": "https://doi.org/10.1145/3649329.3663513",
+      "score": "0.2365",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "partOf",
+      "tail": "https://doi.org/10.1109/MDM.2006.35",
+      "score": "0.5016",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasAuthor",
+      "tail": "Boosting and Nonparametric Based Tracking of Tagged MRI Cardiac Boundaries.",
+      "score": "0.2200",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasDOI",
+      "tail": "DMEA-II and its application on spam email detection problems.",
+      "score": "0.4209",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "paperType",
+      "tail": "in5: a Model for Inbodied Interaction.",
+      "score": "0.2979",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "inYear",
+      "tail": "10.1007/978-3-540-24747-0_8",
+      "score": "0.2662",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "publishedIn",
+      "tail": "Albert C. Leighton",
+      "score": "0.5291",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasDOI",
+      "tail": "10.1145/3334480.3375039",
+      "score": "0.3962",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "inYear",
+      "tail": "https://doi.org/10.25080/majora-212e5952-021",
+      "score": "0.2212",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasLink",
+      "tail": "10.1109/CSCWD64889.2025.11033632",
+      "score": "0.3035",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasDOI",
+      "tail": "Symbolic Analysis of Terrorist Fraud Resistance.",
+      "score": "0.4043",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "paperType",
+      "tail": "Taichi Furukawa",
+      "score": "0.2848",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "inYear",
+      "tail": "A Preliminary Study of Self-Regulation Strategies in Chilean Engineering Students.",
+      "score": "0.2967",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "wrote",
+      "tail": "Michael Vogl",
+      "score": "0.2573",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasDOI",
+      "tail": "Gareth J. Edwards",
+      "score": "0.4400",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasAuthor",
+      "tail": "Guangjian Huang",
+      "score": "0.2534",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "wrote",
+      "tail": "Group behavior from video: a data-driven approach to crowd simulation.",
+      "score": "0.1840",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasLink",
+      "tail": "10.1007/978-3-642-29336-8_8",
+      "score": "0.2700",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "paperType",
+      "tail": "10.1109/IGARSS.2012.6351443",
+      "score": "0.2964",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "publishedIn",
+      "tail": "Chetna Sharma",
+      "score": "0.5000",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "paperType",
+      "tail": "https://doi.org/10.1109/IGARSS.2012.6352090",
+      "score": "0.2905",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasAuthor",
+      "tail": "https://doi.org/10.1109/IGARSS.2015.7325718",
+      "score": "0.2365",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "paperType",
+      "tail": "10.1109/IJCNN.2011.6033368",
+      "score": "0.2921",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "inYear",
+      "tail": "Ron Ferens",
+      "score": "0.2871",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasDOI",
+      "tail": "Harsh",
+      "score": "0.4146",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "partOf",
+      "tail": "Selective commitment and selective margin: Techniques to minimize cost in an IaaS cloud.",
+      "score": "0.5218",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasLink",
+      "tail": "https://doi.org/10.1007/978-3-030-59713-9_38",
+      "score": "0.2590",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasDOI",
+      "tail": "Borys Mychalczak",
+      "score": "0.4406",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasLink",
+      "tail": "Gion-Pol Catregn",
+      "score": "0.3136",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasDOI",
+      "tail": "A. Marcolino",
+      "score": "0.4667",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "inYear",
+      "tail": "10.1109/ICNC.2008.586",
+      "score": "0.2940",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "paperType",
+      "tail": "10.1145/258612.258695",
+      "score": "0.2898",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "hasDOI",
+      "tail": "Ken Peligren",
+      "score": "0.5426",
+      "is_novel": true
+    },
+    {
+      "head": "generated_context",
+      "relation": "paperType",
+      "tail": "Lefteris Stamatogiannakis",
+      "score": "0.2708",
       "is_novel": true
     }
   ]
