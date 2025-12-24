@@ -2,8 +2,8 @@ name: Daily Semantic GAN Training
 
 on:
   schedule:
-    - cron: "0 2 * * *"  
-  workflow_dispatch:    
+    - cron: "0 2 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -17,13 +17,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          lfs: false 
+          lfs: false
 
-      - name: Free Disk Space 
+      - name: Free Disk Space
         run: |
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /usr/local/lib/android
-          df -h 
+          df -h
 
       - name: Set up Python environment
         uses: actions/setup-python@v5
@@ -34,10 +34,19 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
-          pip install huggingface_hub 
+          pip install huggingface_hub
+
+      - name: Download and Prepare DBLP Data
+        run: |
+          mkdir -p data/real
+          mkdir -p data/processed
+          wget https://dblp.org/xml/dblp.xml.gz -O data/real/dblp.xml.gz
+          wget https://dblp.org/xml/dblp.dtd -O data/real/dblp.dtd
+          gunzip data/real/dblp.xml.gz
+          python scripts/prepare_dblp_kg.py
 
       - name: Download Model from Hugging Face
-        continue-on-error: true 
+        continue-on-error: true
         run: |
           mkdir -p checkpoints
           python -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='erdemonal/SemanticGAN', filename='gan_latest.pth', local_dir='checkpoints/')"
@@ -57,23 +66,35 @@ jobs:
       - name: Update dashboard data
         run: python scripts/update_dashboard.py
 
-      - name: Push Updated Model to Hugging Face
+      - name: Push Model and Data to Hugging Face
         env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }} 
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          python -c "from huggingface_hub import HfApi; api = HfApi(); api.upload_file(path_or_fileobj='checkpoints/gan_latest.pth', path_in_repo='gan_latest.pth', repo_id='erdemonal/SemanticGAN', token='${{ secrets.HF_TOKEN }}')"
+          python -c "
+          from huggingface_hub import HfApi
+          api = HfApi()
+          token = '${{ secrets.HF_TOKEN }}'
+          repo_id = 'erdemonal/SemanticGAN'
+          try:
+              api.upload_file(path_or_fileobj='checkpoints/gan_latest.pth', path_in_repo='gan_latest.pth', repo_id=repo_id, token=token)
+          except Exception as e:
+              print(f'Model upload warning: {e}')
+          try:
+              api.upload_file(path_or_fileobj='data/processed/kg_triples_ids.txt', path_in_repo='kg_triples_ids.txt', repo_id=repo_id, token=token)
+              api.upload_file(path_or_fileobj='data/processed/kg_mappings.json', path_in_repo='kg_mappings.json', repo_id=repo_id, token=token)
+          except Exception as e:
+              print(f'Data upload warning: {e}')
+          "
 
       - name: Persist website files to GitHub
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          
           git add data/synthetic/*.txt
           git add data/processed/training_log.csv
           git add data/processed/loss_curve.png
           git add semantic_map.html
           git add dashboard_data.json
-          
           git commit -m "Update dashboard and metrics [skip ci]" || echo "No changes to commit"
           git pull --rebase origin main
           git push
