@@ -17,15 +17,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          lfs: true 
+          lfs: false 
 
       - name: Free Disk Space 
         run: |
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
           df -h
 
       - name: Set up Python environment
@@ -38,39 +35,41 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Train GAN model
+      - name: Download Model from Hugging Face
         run: |
-          python scripts/train_gan.py
+          mkdir -p checkpoints
+          python -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='erdemonal/SemanticGAN', filename='gan_latest.pth', local_dir='checkpoints/', local_dir_use_symlinks=False)"
+
+      - name: Train GAN model
+        run: python scripts/train_gan.py
 
       - name: Evaluate generation metrics
-        run: |
-          python scripts/evaluate_gan.py
+        run: python scripts/evaluate_gan.py
 
       - name: Plot and Clean training curves
-        run: |
-          python scripts/plot_training.py
+        run: python scripts/plot_training.py
 
       - name: Generate Interactive Map
-        run: |
-          python scripts/visualize_interactive.py
+        run: python scripts/visualize_interactive.py
 
       - name: Update dashboard data
-        run: |
-          python scripts/update_dashboard.py
+        run: python scripts/update_dashboard.py
 
-      - name: Persist model artifacts and website files
+      - name: Push Updated Model to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python -c "from huggingface_hub import HfApi; api = HfApi(); api.upload_file(path_or_fileobj='checkpoints/gan_latest.pth', path_in_repo='gan_latest.pth', repo_id='erdemonal/SemanticGAN', token='${{ secrets.HF_TOKEN }}')"
+
+      - name: Persist website files to GitHub
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-
-          git add checkpoints/gan_latest.pth
           git add data/synthetic/*.txt
           git add data/processed/training_log.csv
           git add data/processed/loss_curve.png
           git add semantic_map.html
           git add dashboard_data.json
-
-          git commit -m "Scheduled GAN training and dashboard update" || echo "No changes to commit"
-          
+          git commit -m "Update dashboard and metrics [skip ci]" || echo "No changes"
           git pull --rebase origin main
           git push

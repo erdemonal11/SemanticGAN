@@ -5,3 +5,4 @@ pandas
 tqdm
 plotly
 scikit-learn
+huggingface_hub
