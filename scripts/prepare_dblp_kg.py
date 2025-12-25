@@ -176,7 +176,7 @@ class DBLPHandler(xml.sax.ContentHandler):
             self.current_key = ""
             self.current_tag = ""
             if self.count % 100000 == 0:
-                print(f"Processed {self.count} entities...")
+                print(f"Processed {self.count} publication records...")
             return
 
         if not value:
@@ -242,29 +242,50 @@ def build_coauthor_graph(triples):
     print(f"Added {len(coauthor_edges)} symmetric coauthor edges.")
     return coauthor_edges
 
-def save_triples_and_mappings(triples, output_txt, output_json):
-    entity_set = set()
-    relation_set = set()
-    
-    print(f"Total triples before coauthor: {len(triples)}")
+def save_triples_and_mappings(triples, output_txt, output_json, max_entities=2000000):
+    print(f"\n[FILTERING] Starting entity filtering (limit: {max_entities:,})...")
+    print(f"Total triples before coauthor: {len(triples):,}")
     
     coauthor_triples = build_coauthor_graph(triples)
     all_triples = triples + coauthor_triples
     
-    print(f"Total triples final: {len(all_triples)}")
+    print(f"Total triples after coauthor graph: {len(all_triples):,}")
     
+    print(f"[FILTERING] Counting entity frequencies...")
+    entity_counts = defaultdict(int)
+    relation_set = set()
     for h, r, t in all_triples:
-        entity_set.add(h)
-        entity_set.add(t)
+        entity_counts[h] += 1
+        entity_counts[t] += 1
         relation_set.add(r)
-        
+    
+    print(f"[FILTERING] Found {len(entity_counts):,} unique entities")
+    
+    sorted_entities = sorted(entity_counts.items(), key=lambda x: x[1], reverse=True)
+    top_entities = set([e for e, _ in sorted_entities[:max_entities]])
+    
+    print(f"[FILTERING] Selecting top {max_entities:,} entities by frequency...")
+    
+    filtered_triples = []
+    entity_set = set()
+    for h, r, t in all_triples:
+        if h in top_entities and t in top_entities:
+            filtered_triples.append((h, r, t))
+            entity_set.add(h)
+            entity_set.add(t)
+    
+    print(f"[FILTERING] Filtered to {len(filtered_triples):,} triples (from {len(all_triples):,})")
+    
     entity2id = {e: i for i, e in enumerate(sorted(entity_set))}
     relation2id = {r: i for i, r in enumerate(sorted(relation_set))}
     
-    print(f"Entities: {len(entity2id)} | Relations: {len(relation2id)}")
+    print(f"[SUCCESS] Final counts - Entities: {len(entity2id):,} | Relations: {len(relation2id)}")
+    
+    if len(entity2id) > max_entities:
+        print(f"[WARN] Entity count ({len(entity2id):,}) exceeds limit ({max_entities:,})!")
     
     with open(output_txt, 'w', encoding='utf-8') as f:
-        for h, r, t in all_triples:
+        for h, r, t in filtered_triples:
             f.write(f"{entity2id[h]}\t{relation2id[r]}\t{entity2id[t]}\n")
             
     mappings = {
