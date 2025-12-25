@@ -1,7 +1,7 @@
 # Wasserstein GAN for Knowledge Graph Completion with Continuous Learning
 
-[![Daily Semantic GAN Training](https://github.com/erdemonal11/SemanticGAN/actions/workflows/daily-experiment.yml/badge.svg)](https://github.com/erdemonal11/SemanticGAN/actions/workflows/daily-experiment.yml)
-[![pages-build-deployment](https://github.com/erdemonal11/SemanticGAN/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/erdemonal11/SemanticGAN/actions/workflows/pages/pages-build-deployment)
+[![Daily Semantic GAN Training](https://github.com/erdemonal/SemanticGAN/actions/workflows/daily-experiment.yml/badge.svg)](https://github.com/erdemonal/SemanticGAN/actions/workflows/daily-experiment.yml)
+[![pages-build-deployment](https://github.com/erdemonal/SemanticGAN/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/erdemonal/SemanticGAN/actions/workflows/pages/pages-build-deployment)
 
 This repository contains a research prototype for Knowledge Graph Completion on the DBLP Computer Science Bibliography.
 
@@ -17,7 +17,7 @@ The LaTeX source is available in [`paper/main.tex`](paper/main.tex)
 
 ## Training Dashboard
 
-Metrics are available at https://erdemonal11.github.io/SemanticGAN
+Metrics are available at https://erdemonal.github.io/SemanticGAN
 
 The dashboard is used to monitor training progress and inspect generated RDF triples.
 
@@ -25,17 +25,21 @@ The dashboard is used to monitor training progress and inspect generated RDF tri
 
 The system processes the DBLP XML dump from https://dblp.uni-trier.de/xml to extract a knowledge graph with entity types Publication, Author, Venue, and Year. Relations include dblp:wrote, dblp:hasAuthor, dblp:publishedIn, and dblp:inYear.
 
-The preprocessing script `scripts/prepare_dblp_kg.py` reads the XML file incrementally and produces RDF triples in tab separated format.
+The preprocessing script `scripts/prepare_dblp_kg.py` reads the XML file incrementally and produces RDF triples in tab separated format. The preprocessed 1M triple dataset is versioned and maintained in the [Hugging Face Dataset Hub](https://huggingface.co/datasets/erdemonal/SemanticGAN-Dataset).
 
 The WGAN model consists of a Generator that produces tail entity embeddings from noise and relation embeddings, and a Discriminator that scores triples using a scalar Wasserstein distance. Training uses RMSprop with gradient clipping to enforce the Lipschitz constraint.
 
 The continuous learning pipeline runs via GitHub Actions in `.github/workflows/daily-experiment.yml`. The workflow loads the latest checkpoint, updates the model with new data when available, computes evaluation metrics, and updates the dashboard.
 
-## Model Storage and Versioning
+## Model Storage and Data Decoupling
 
-Model checkpoints and processed knowledge graph files are kept on the Hugging Face Hub at https://huggingface.co/erdemonal/SemanticGAN.
+Model weights and processed knowledge graph artifacts are hosted on the Hugging Face Hub across two repositories:
 
-Each daily training run loads the latest checkpoint from there and writes back the updated model state after training. The repository is used only as persistent storage for the continuous learning workflow.
+Model Hub: [erdemonal/SemanticGAN](https://huggingface.co/erdemonal/SemanticGAN) stores the persistent WGAN checkpoints.
+
+Dataset Hub: [erdemonal/SemanticGAN-Dataset](https://huggingface.co/erdemonal/SemanticGAN-Dataset) contains the processed DBLP triples and ID mappings.
+
+The continuous learning pipeline automatically fetches data from the Dataset Hub and restores model states from the Model Hub before each training run.
 
 ## Repository Structure
 
@@ -47,4 +51,3 @@ The DBLP dataset is publicly available from https://dblp.uni-trier.de/xml
 
 Documentation is available at https://dblp.org/xml/docu/dblpxml.pdf
 
-Place the `dblp.xml` file in `data/real/` before running preprocessing.

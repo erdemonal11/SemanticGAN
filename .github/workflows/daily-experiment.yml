@@ -39,8 +39,7 @@ jobs:
       - name: Download Data from Hugging Face
         run: |
           mkdir -p data/processed
-          echo "Downloading pre-processed data from Hugging Face..."
-          python -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='erdemonal/SemanticGAN', filename='kg_triples_ids.txt', local_dir='data/processed/'); hf_hub_download(repo_id='erdemonal/SemanticGAN', filename='kg_mappings.json', local_dir='data/processed/')"
+          python -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='erdemonal/SemanticGAN-Dataset', filename='kg_triples_ids.txt', local_dir='data/processed/', repo_type='dataset'); hf_hub_download(repo_id='erdemonal/SemanticGAN-Dataset', filename='kg_mappings.json', local_dir='data/processed/', repo_type='dataset')"
           ls -lh data/processed/
 
       - name: Download Model from Hugging Face
@@ -74,11 +73,10 @@ jobs:
           token = '${{ secrets.HF_TOKEN }}'
           repo_id = 'erdemonal/SemanticGAN'
           try:
-              print('Uploading updated model...')
               api.upload_file(path_or_fileobj='checkpoints/gan_latest.pth', path_in_repo='gan_latest.pth', repo_id=repo_id, token=token)
               print('Success!')
           except Exception as e:
-              print(f'Model upload warning: {e}')
+              print(f'Error: {e}')
           "
 
       - name: Persist website files to GitHub
