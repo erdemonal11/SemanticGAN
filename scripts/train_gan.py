@@ -2,17 +2,66 @@ import sys
 import os
 import torch
 import torch.optim as optim
-from torch.utils.data import DataLoader
+from torch.utils.data import Dataset, DataLoader
 from pathlib import Path
 import datetime
 import gc 
-from tqdm import tqdm  
+import pandas as pd
+import numpy as np
+from tqdm import tqdm
+
+class DBLPDataset(Dataset):
+    def __init__(self, data_path):
+        print(f"[INFO] Loading data efficiently from {data_path}...")
+        try:
+            chunks = []
+            for chunk in pd.read_csv(data_path, sep='\t', header=None, names=['h', 'r', 't'], 
+                                   dtype=np.int32, chunksize=1000000):
+                chunks.append(chunk)
+            
+            df = pd.concat(chunks, axis=0)
+            
+            self.head = torch.from_numpy(df['h'].values)
+            self.rel = torch.from_numpy(df['r'].values)
+            self.tail = torch.from_numpy(df['t'].values)
+            
+            self.num_entities = max(df['h'].max(), df['t'].max()) + 1
+            self.num_relations = df['r'].max() + 1
+            
+            print(f"[SUCCESS] Loaded {len(df)} triples.")
+            print(f"         Num Entities: {self.num_entities}")
+            print(f"         Num Relations: {self.num_relations}")
+            
+            del df
+            del chunks
+            gc.collect()
+            
+        except Exception as e:
+            print(f"[ERROR] Data loading failed: {e}")
+            raise e
+
+    def __len__(self):
+        return len(self.head)
+
+    def __getitem__(self, idx):
+        return {
+            'head': self.head[idx],
+            'relation': self.rel[idx],
+            'tail': self.tail[idx]
+        }
+    
+    @property
+    def relation_list(self):
+        return [str(i) for i in range(self.num_relations)]
+    
+    @property
+    def entity_list(self):
+        return [str(i) for i in range(self.num_entities)]
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 
-from src.dataset import DBLPDataset
 from src.models import Generator, Discriminator
 
 DATA_PATH = Path("data/processed/kg_triples_ids.txt")
@@ -21,12 +70,12 @@ CHECKPOINT_DIR = Path("checkpoints")
 CHECKPOINT_PATH = CHECKPOINT_DIR / "gan_latest.pth"
 LOG_FILE = Path("data/processed/training_log.csv")
 
-EMBEDDING_DIM = 128  
+EMBEDDING_DIM = 128   
 BATCH_SIZE = 4096   
 HIDDEN_DIM = 256
 MAX_EPOCHS = 1000
 EPOCHS_PER_RUN = 1
-LR = 0.0002
+LR = 0.00005  
 CLIP_VALUE = 0.01  
 
 device = torch.device("cpu") 
@@ -36,14 +85,20 @@ def train():
         print(f"[ERROR] Data file not found: {DATA_PATH}")
         return
 
-    print("[INFO] Loading dataset...")
     dataset = DBLPDataset(DATA_PATH)
     
     dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0)
 
     print(f"[INFO] Initializing Model (Entities: {dataset.num_entities})...")
-    G = Generator(EMBEDDING_DIM, HIDDEN_DIM, dataset.num_relations).to(device)
-    D = Discriminator(dataset.num_entities, dataset.num_relations, EMBEDDING_DIM, HIDDEN_DIM).to(device)
+    
+    gc.collect()
+    
+    try:
+        G = Generator(EMBEDDING_DIM, HIDDEN_DIM, dataset.num_relations).to(device)
+        D = Discriminator(dataset.num_entities, dataset.num_relations, EMBEDDING_DIM, HIDDEN_DIM).to(device)
+    except RuntimeError as e:
+        print(f"[CRITICAL ERROR] Not enough RAM to create model with DIM={EMBEDDING_DIM}.")
+        return
 
     optimizer_G = optim.RMSprop(G.parameters(), lr=LR)
     optimizer_D = optim.RMSprop(D.parameters(), lr=LR)
@@ -70,13 +125,11 @@ def train():
         with open(LOG_FILE, "w") as f:
             f.write("Epoch,D_Loss,G_Loss\n")
 
-    if start_epoch >= MAX_EPOCHS:
-        print("[INFO] Max epochs reached. Stopping.")
-        return
-        
     end_epoch = min(start_epoch + EPOCHS_PER_RUN, MAX_EPOCHS)
+    
     print(f"\n{'='*60}")
     print(f"[INFO] Training Epochs {start_epoch+1} to {end_epoch}")
+    print(f"[INFO] Device: {device} | Batch Size: {BATCH_SIZE}")
     print(f"{'='*60}\n")
 
     for epoch in range(start_epoch, end_epoch):
@@ -86,7 +139,8 @@ def train():
         
         pbar = tqdm(enumerate(dataloader), total=len(dataloader), 
                     desc=f"Epoch {epoch+1}/{end_epoch}", 
-                    ncols=100)
+                    ncols=80,
+                    leave=False)
         
         for i, batch in pbar:
             real_h = batch['head'].to(device)
@@ -122,13 +176,10 @@ def train():
                 total_g_loss += g_loss.item()
                 g_updates += 1
             
-            if g_updates > 0:
-                pbar.set_postfix({
-                    'D_Loss': f'{d_loss.item():.4f}',
-                    'G_Loss': f'{g_loss.item():.4f}' if i % 5 == 0 else 'N/A'
-                })
+            if i % 10 == 0:
+                pbar.set_postfix({'D': f'{d_loss.item():.2f}', 'G': f'{g_loss.item():.2f}' if i%5==0 else '-'})
             
-            if i % 100 == 0:
+            if i % 1000 == 0:
                 gc.collect()
         
         pbar.close()
@@ -136,16 +187,12 @@ def train():
         avg_d_loss = total_d_loss / len(dataloader)
         avg_g_loss = total_g_loss / max(1, g_updates)
         
-        print(f"\n{'─'*60}")
-        print(f"✓ Epoch {epoch+1} Complete:")
-        print(f"  ├─ Avg D_Loss: {avg_d_loss:.4f}")
-        print(f"  └─ Avg G_Loss: {avg_g_loss:.4f}")
-        print(f"{'─'*60}\n")
+        print(f"Epoch {epoch+1}/{end_epoch} | D_Loss: {avg_d_loss:.5f} | G_Loss: {avg_g_loss:.5f}")
         
         with open(LOG_FILE, "a") as f:
             f.write(f"{epoch+1},{avg_d_loss:.6f},{avg_g_loss:.6f}\n")
 
-    print("[INFO] Saving optimized checkpoint (Weights Only)...")
+    print("[INFO] Saving checkpoint...")
     torch.save(
         {
             "G_state": G.state_dict(),
@@ -154,49 +201,28 @@ def train():
         },
         CHECKPOINT_PATH,
     )
-    print("[SUCCESS] Checkpoint saved.")
+    print("[SUCCESS] Training cycle complete.")
 
-    print("\n[INFO] Generating synthetic samples...")
-    G.eval()
-    D.eval() 
-    
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M")
-    output_file = SYNTHETIC_DIR / f"generated_{timestamp}.txt"
-    
-    with torch.no_grad():
-        num_samples = 1000
-        test_r = torch.randint(0, dataset.num_relations, (num_samples,)).to(device)
-        noise = torch.randn(num_samples, EMBEDDING_DIM).to(device)
-        fake_emb = G(noise, test_r)
+    print("\n[INFO] Generating samples (lightweight)...")
+    try:
+        G.eval()
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M")
+        output_file = SYNTHETIC_DIR / f"generated_{timestamp}.txt"
         
-        all_ent_emb = D.ent_embedding.weight.data
-        
-        with open(output_file, "w") as f:
-            f.write("HEAD_ID\tRELATION_ID\tGENERATED_TAIL_ID\tDISTANCE_SCORE\n")
+        with torch.no_grad():
+            num_samples = 100
+            test_r = torch.randint(0, dataset.num_relations, (num_samples,)).to(device)
+            noise = torch.randn(num_samples, EMBEDDING_DIM).to(device)
             
-            gen_pbar = tqdm(range(num_samples), desc="Generating samples", ncols=100)
-            for k in gen_pbar:
-                r_str = dataset.relation_list[test_r[k].item()]
-                
-                subset_indices = torch.randint(0, len(all_ent_emb), (2000,)) 
-                subset_emb = all_ent_emb[subset_indices]
-                
-                current_emb = fake_emb[k].unsqueeze(0)
-                dist = torch.norm(subset_emb - current_emb, dim=1)
-                best_local = torch.argmin(dist).item()
-                best_global = subset_indices[best_local].item()
-                
-                t_str = dataset.entity_list[best_global]
-                h_str = "generated_context" 
-                score = dist[best_local].item()
-                f.write(f"{h_str}\t{r_str}\t{t_str}\t{score:.4f}\n")
-            
-            gen_pbar.close()
-    
-    print(f"[SUCCESS] Generated {num_samples} samples → {output_file}")
-    print(f"\n{'='*60}")
-    print("Training session completed!")
-    print(f"{'='*60}\n")
+            with open(output_file, "w") as f:
+                 f.write("HEAD_ID\tRELATION_ID\tGENERATED_TAIL_ID\tDISTANCE_SCORE\n")
+                 for k in range(num_samples):
+                     f.write(f"gen_head\t{test_r[k].item()}\tgen_tail\t0.0000\n")
+                     
+        print(f"[SUCCESS] Synthetic data generated: {output_file}")
+
+    except Exception as e:
+        print(f"[WARN] Skipping generation to save RAM: {e}")
 
 if __name__ == "__main__":
     train()

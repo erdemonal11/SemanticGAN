@@ -1,7 +1,7 @@
+data/processed/*.txt
+data/processed/*.json
+data/real/
+data/synthetic/*.txt
+checkpoints/*.pth
 __pycache__/
-*.pyc
-
-
-data/real/dblp.xml
-
-data/real/dblp.xml
+.DS_Store

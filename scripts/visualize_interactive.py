@@ -15,6 +15,8 @@ CHECKPOINT_PATH = Path(parent_dir) / "checkpoints/gan_latest.pth"
 MAPPINGS_FILE = Path(parent_dir) / "data/processed/kg_mappings.json"
 OUTPUT_HTML = Path(parent_dir) / "semantic_map.html"
 
+MAX_NODES = 500 
+
 def create_interactive_map():
     if not CHECKPOINT_PATH.exists():
         print(f"Error: {CHECKPOINT_PATH} not found.")
@@ -22,35 +24,47 @@ def create_interactive_map():
 
     print("Loading mappings...")
     with open(MAPPINGS_FILE, "r") as f:
-        id_to_str = json.load(f)
-    
+        data = json.load(f)
+        id_to_str = data.get("id2ent", {})
+
     print("Loading model checkpoint...")
     checkpoint = torch.load(CHECKPOINT_PATH, map_location="cpu", weights_only=False)
-    embeddings = checkpoint["D_state"]["ent_embedding.weight"].numpy()
+    if "D_state" in checkpoint:
+        embeddings = checkpoint["D_state"]["ent_embedding.weight"].numpy()
+    else:
+        print("Discriminator weights not found, visualization skipped.")
+        return
 
     indices = []
     metadata = []
     
     print("Selecting entities for visualization...")
-    for eid, text in id_to_str.items():
-        if "_" not in eid: continue
-        try:
-            idx = int(eid.split("_")[1])
-        except ValueError: continue
+    
+    sorted_ids = sorted([int(k) for k in id_to_str.keys()])
+    
+    step = max(1, len(sorted_ids) // MAX_NODES)
+    
+    for i in range(0, len(sorted_ids), step):
+        idx = sorted_ids[i]
+        if idx >= len(embeddings): continue
+        
+        indices.append(idx)
+        text = id_to_str[str(idx)]
+        
+        if text.startswith("venue/"): e_type = "Venue"
+        elif text.startswith("conf/"): e_type = "Conference Paper"
+        elif text.startswith("journals/"): e_type = "Journal Article"
+        elif text.startswith("homepages/"): e_type = "Person Profile"
+        elif " " in text and not text.startswith("dblp:"): e_type = "Author/Person" 
+        elif text.startswith("dblp:"): e_type = "Relation/Type"
+        else: e_type = "Other"
+        
+        display_name = (text[:75] + '..') if len(text) > 75 else text
+        metadata.append({"Name": display_name, "Type": e_type})
 
-        if idx < len(embeddings) and len(indices) < 5000:
-            indices.append(idx)
-            
-            
-            if eid.startswith("venue_"): e_type = "Conference"
-            elif eid.startswith("author_"): e_type = "Author"
-            elif eid.startswith("doi_"): e_type = "DOI"
-            elif eid.startswith("link_"): e_type = "Link"
-            elif eid.startswith("type_"): e_type = "Paper Type"
-            elif eid.startswith("collection_"): e_type = "Collection"
-            else: e_type = "Publication"
-            
-            metadata.append({"Name": text, "Type": e_type})
+    if not indices:
+        print("No indices selected.")
+        return
 
     selected_embeddings = embeddings[indices]
     
@@ -66,20 +80,18 @@ def create_interactive_map():
     fig = px.scatter(
         df, x="X", y="Y", color="Type", hover_name="Name",
         template="plotly_dark",
+        title=f"Semantic Space Map (Sampled {len(df)} Nodes)",
         color_discrete_map={
-            "Conference": "#00ffff",  
-            "Author": "#ff0000",      
-            "DOI": "#00ff00",         
-            "Link": "#ffff00",        
-            "Paper Type": "#ff00ff",  
-            "Collection": "#ffa500",  
-            "Publication": "#808080"  
+            "Venue": "#00ffff",       
+            "Author/Person": "#ff0000", 
+            "Conference Paper": "#00ff00",
+            "Journal Article": "#ffff00",  
+            "Person Profile": "#ff00ff",   
+            "Other": "#808080"        
         }
     )
 
-    fig.update_traces(marker=dict(size=5, opacity=0.7, line=dict(width=0.5, color='white')))
-    fig.update_layout(showlegend=True, legend_title_text='Entity Category')
-    
+    fig.update_traces(marker=dict(size=6, opacity=0.8, line=dict(width=0.5, color='white')))
     fig.write_html(str(OUTPUT_HTML))
     print(f"Interactive map generated: {OUTPUT_HTML}")
 

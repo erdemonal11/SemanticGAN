@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 class Generator(nn.Module):
-    def __init__(self, embedding_dim, hidden_dim, num_relations):
+    def __init__(self, embedding_dim=32, hidden_dim=64, num_relations=0):
         super(Generator, self).__init__()
         self.rel_embedding = nn.Embedding(num_relations, embedding_dim)
 
@@ -23,7 +23,7 @@ class Generator(nn.Module):
         return self.net(x)
 
 class Discriminator(nn.Module):
-    def __init__(self, num_entities, num_relations, embedding_dim, hidden_dim):
+    def __init__(self, num_entities, num_relations, embedding_dim=32, hidden_dim=64):
         super(Discriminator, self).__init__()
         self.ent_embedding = nn.Embedding(num_entities, embedding_dim)
         self.rel_embedding = nn.Embedding(num_relations, embedding_dim)

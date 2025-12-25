@@ -1,31 +1,22 @@
-name: Daily Semantic GAN Training
+name: Update Dashboard 
 
 on:
+  workflow_dispatch:  
   schedule:
-    - cron: "0 4 * * *"
-  workflow_dispatch:
+    - cron: "0 6 * * *" 
 
 permissions:
   contents: write
 
 jobs:
-  train-and-deploy:
+  update-site:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          lfs: false
 
-      - name: Free Disk Space
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/local/lib/android
-          df -h
-
-      - name: Set up Python environment
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
@@ -33,61 +24,33 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install huggingface_hub
+          pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          pip install pandas numpy matplotlib networkx plotly scikit-learn huggingface_hub
 
-      - name: Download Data from Hugging Face
-        run: |
-          mkdir -p data/processed
-          python -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='erdemonal/SemanticGAN-Dataset', filename='kg_triples_ids.txt', local_dir='data/processed/', repo_type='dataset'); hf_hub_download(repo_id='erdemonal/SemanticGAN-Dataset', filename='kg_mappings.json', local_dir='data/processed/', repo_type='dataset')"
-          ls -lh data/processed/
-
-      - name: Download Model from Hugging Face
-        continue-on-error: true
+      - name: Download Model and Data from Hugging Face
         run: |
           mkdir -p checkpoints
-          python -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='erdemonal/SemanticGAN', filename='gan_latest.pth', local_dir='checkpoints/')"
+          mkdir -p data/processed
+          python -c "from huggingface_hub import hf_hub_download; \
+          hf_hub_download(repo_id='erdemonal/SemanticGAN-Dataset', filename='kg_mappings.json', local_dir='data/processed/', repo_type='dataset'); \
+          hf_hub_download(repo_id='erdemonal/SemanticGAN', filename='gan_latest.pth', local_dir='checkpoints/')"
 
-      - name: Train GAN model
-        run: python scripts/train_gan.py
+     
 
-      - name: Evaluate generation metrics
-        run: python scripts/evaluate_gan.py
-
-      - name: Plot and Clean training curves
-        run: python scripts/plot_training.py
-
-      - name: Generate Interactive Map
-        run: python scripts/visualize_interactive.py
-
-      - name: Update dashboard data
-        run: python scripts/update_dashboard.py
-
-      - name: Push Model to Hugging Face
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      - name: Generate Visuals (Map & Plots)
         run: |
-          python -c "
-          from huggingface_hub import HfApi
-          api = HfApi()
-          token = '${{ secrets.HF_TOKEN }}'
-          repo_id = 'erdemonal/SemanticGAN'
-          try:
-              api.upload_file(path_or_fileobj='checkpoints/gan_latest.pth', path_in_repo='gan_latest.pth', repo_id=repo_id, token=token)
-              print('Success!')
-          except Exception as e:
-              print(f'Error: {e}')
-          "
+          python scripts/evaluate_gan.py
+          python scripts/visualize_interactive.py
+          python scripts/update_dashboard.py
+          python scripts/plot_training.py || echo "Plotting skipped if no log"
 
-      - name: Persist website files to GitHub
+      - name: Push Updates to Website
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add data/synthetic/*.txt
-          git add data/processed/training_log.csv
-          git add data/processed/loss_curve.png
           git add semantic_map.html
           git add dashboard_data.json
-          git commit -m "Update dashboard and metrics [skip ci]" || echo "No changes to commit"
-          git pull --rebase origin main
+          git add data/processed/loss_curve.png || echo "No loss curve to add"
+          git commit -m "Auto-update dashboard from latest Kaggle model [skip ci]" || echo "No changes"
           git push

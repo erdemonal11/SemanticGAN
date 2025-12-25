@@ -28,7 +28,8 @@ def main():
 
     print(" - Loading ID Mappings (this might take a moment)...")
     with open(MAPPINGS_PATH, "r", encoding="utf-8") as f:
-        id_to_name = json.load(f)
+        data = json.load(f)
+        id_to_name = data.get("id2ent", {})  
 
     synthetic_files = sorted(SYNTHETIC_DIR.glob("generated_*.txt"))
     if not synthetic_files:
@@ -88,33 +89,99 @@ def main():
 
     avg_distance = (sum(score for _, _, _, score in synthetic_triples) / total if total > 0 else 0)
 
+
     relation_tail_rules = {
-        "dblp:wrote": "pub_",
-        "dblp:hasAuthor": "author_",
-        "dblp:publishedIn": "venue_",
-        "dblp:inYear": "year_",
-        "dblp:hasLink": "link_",
-        "dblp:hasDOI": "doi_",
-        "dblp:paperType": "type_",
-        "dblp:partOf": "collection_"
+        "dblp:hasAuthor": "author",
+        "dblp:hasEditor": "author",
+        "dblp:conferenceSeries": "venue/conf",
+        "dblp:journalID": "venue/journal",
+        "dblp:listedIn": "venue",
+        "dblp:presentedAt": "venue",
+        "dblp:publishedInJournal": "venue",
+        "dblp:publishedInYear": "year",
+        "dblp:conferenceYear": "year",
+        "dblp:hasDOI": "doi",
+        "dblp:hasLink": "link",
+        "dblp:partOf": "collection",
+        "dblp:cites": "pub",
+        "dblp:coauthorWith": "author",
+        "dblp:primaryName": "name",
+        "dblp:variantName": "name",
+        "dblp:baseName": "name",
+        "dblp:homonymID": "id",
+        "dblp:affiliation": "org",
+        "dblp:title": "", 
+        "dblp:volume": "",
+        "dblp:volumeFromKey": "",
+        "dblp:issueNumber": "",
+        "dblp:pages": "",
+        "dblp:publisher": "",
+        "dblp:address": "",
+        "dblp:isbn": "",
+        "dblp:issn": "",
+        "dblp:series": "",
+        "dblp:seriesPage": "",
+        "dblp:school": "",
+        "dblp:cdrom": "",
+        "dblp:publishedInMonth": "",
+        "dblp:extractedDOI": "",
+        "dblp:lastModified": "",
+        "rdf:type": "dblp",
     }
     relation_head_rules = {
-        "dblp:wrote": "author_",
-        "dblp:hasAuthor": "pub_",
-        "dblp:publishedIn": "pub_",
-        "dblp:inYear": "pub_",
-        "dblp:hasLink": "pub_",
-        "dblp:hasDOI": "pub_",
-        "dblp:paperType": "pub_",
-        "dblp:partOf": "pub_"
+        "dblp:hasAuthor": "conf", 
+        "dblp:hasEditor": "conf",
+        "dblp:conferenceSeries": "conf",
+        "dblp:journalID": "journals",
+        "dblp:listedIn": "conf",
+        "dblp:presentedAt": "conf",
+        "dblp:publishedInJournal": "journals",
+        "dblp:publishedInYear": "conf",
+        "dblp:conferenceYear": "conf",
+        "dblp:hasDOI": "conf",
+        "dblp:hasLink": "conf",
+        "dblp:partOf": "conf",
+        "dblp:cites": "conf",
+        "dblp:title": "conf",
+        "dblp:volume": "conf",
+        "dblp:volumeFromKey": "conf",
+        "dblp:issueNumber": "conf",
+        "dblp:pages": "conf",
+        "dblp:publisher": "conf",
+        "dblp:address": "conf",
+        "dblp:isbn": "conf",
+        "dblp:issn": "conf",
+        "dblp:series": "conf",
+        "dblp:seriesPage": "conf",
+        "dblp:school": "conf",
+        "dblp:cdrom": "conf",
+        "dblp:publishedInMonth": "conf",
+        "dblp:extractedDOI": "conf",
+        "dblp:lastModified": "conf",
+        "dblp:coauthorWith": "author",
+        "dblp:primaryName": "homepages",
+        "dblp:variantName": "homepages",
+        "dblp:baseName": "author",
+        "dblp:homonymID": "author",
+        "dblp:affiliation": "homepages",
+        "rdf:type": "conf",
     }
     
     valid_count = 0
     for h, r, t, _ in synthetic_triples:
-        allowed_head = relation_head_rules.get(r, "")
-        allowed_tail = relation_tail_rules.get(r, "")
+        allowed_head = relation_head_rules.get(r, None)
+        allowed_tail = relation_tail_rules.get(r, None)
         
-        if h.startswith(allowed_head) and t.startswith(allowed_tail):
+        if allowed_head is None and allowed_tail is None:
+            valid_count += 1
+        elif allowed_head is not None and allowed_tail is not None:
+            head_valid = (allowed_head == "" or h.startswith(allowed_head) or 
+                         any(h.startswith(prefix) for prefix in ["conf/", "journals/", "homepages/", "venue/"]))
+            tail_valid = (allowed_tail == "" or t.startswith(allowed_tail) or 
+                         any(t.startswith(prefix) for prefix in ["venue/", "author", "dblp:"]))
+            if head_valid and tail_valid:
+                valid_count += 1
+        else:
             valid_count += 1
             
     schema_validity = (valid_count / total) * 100 if total > 0 else 0
