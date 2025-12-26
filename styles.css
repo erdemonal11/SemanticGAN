@@ -150,6 +150,11 @@ h2 {
   border-bottom: 1px solid #eee;
   color: var(--text-primary);
   font-size: 13px;
+  white-space: nowrap;
+}
+
+.kg-table td:nth-child(5) {
+  white-space: normal;
 }
 
 .kg-table td:nth-child(2) {
@@ -185,6 +190,8 @@ h2 {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .status-verified {
