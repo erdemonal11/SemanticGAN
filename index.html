@@ -155,7 +155,7 @@
           const data = await response.json();
 
           document.getElementById("lastUpdated").innerText =
-            "System Status: ONLINE | Last Run: " + data.last_updated;
+            "Last Run: " + data.last_updated;
 
           document.getElementById("noveltyScore").innerText =
             data.stats.novelty + "%";
