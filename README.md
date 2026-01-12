@@ -56,9 +56,11 @@ D = Discriminator(
 dataloader = DataLoader(dataset, batch_size=1024, shuffle=True)
 ```
 
-## Research Implementation: DBLP Case Study
+## Technical Report: DBLP Case Study
 
-This repository contains the full implementation corresponding to the research paper "Knowledge Graph Completion and RDF Triple Generation with a Wasserstein GAN", applied to the DBLP Computer Science Bibliography.
+This repository accompanies a technical report entitled
+"Knowledge Graph Completion and RDF Triple Generation with a Wasserstein GAN",
+presenting an experimental study on the DBLP Computer Science Bibliography.
 
 ### Technical Report
 
